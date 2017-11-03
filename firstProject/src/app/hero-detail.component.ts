@@ -5,12 +5,17 @@ import { Location }                 from '@angular/common';
 
 import { Hero }         from './hero';
 import { HeroService }  from './hero.service';
+
 @Component({
   selector: 'hero-detail',
   templateUrl: './hero-detail.component.html',
   styleUrls: [ './hero-detail.component.css' ]
 })
+
 export class HeroDetailComponent implements OnInit {
+
+  private headers = new Headers({'Content-Type': 'application/json'});
+  private heroesUrl = 'api/heroes';
   hero: Hero;
 
   constructor(
@@ -28,5 +33,10 @@ export class HeroDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-}
 
+  save(): void {
+    this.heroService.update(this.hero)
+      .then(() => this.goBack());
+  }
+
+}
